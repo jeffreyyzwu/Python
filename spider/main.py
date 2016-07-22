@@ -8,8 +8,8 @@ importlib.reload(sys)
 
 
 def main():
-    task = xitek()
-    task.getPhoto()
+    xitek().getPhoto()
+
 
 if __name__ == "__main__":
     main()

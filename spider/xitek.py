@@ -3,7 +3,7 @@ __author__ = 'jeffrey'
 from baseSpider import baseSpider, config
 from bs4 import BeautifulSoup
 import re
-from urllib import request
+#from urllib import request
 
 
 class xitek(baseSpider):
@@ -33,4 +33,4 @@ class xitek(baseSpider):
             print(final_link)
             title = bs.title.string.strip()
             filename = re.sub('[\/:*?"<>|]', '-', title) + '.jpg'
-            request.urlretrieve(final_link, filename)
+            self.saveImages(final_link, filename)

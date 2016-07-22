@@ -45,6 +45,9 @@ class baseSpider():
     def download(self, url):
         pass
 
+    def saveImages(self, url, name):
+        request.urlretrieve(url, name)
+
     def __makeDownloadDir(self):
         sub_folder = os.path.join(os.getcwd(), self.config.download_path)
         if not os.path.exists(sub_folder):
