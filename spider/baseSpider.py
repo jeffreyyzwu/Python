@@ -9,23 +9,38 @@ import os
 
 
 class config():
+
     site_url = ""
     last_page = 1
-    page_url = ""
-    download_path = "download"
+    page_urls = ""
+    _download_path = ""
+    time_sleep = 0
+
+    def __init__(self):
+        self._download_path = os.getcwd()
+
+    @property
+    def download_path(self):
+        return self._download_path
 
 
 class baseSpider():
-
-    config  # = config()
+    _downloaded_photos = []
+    config
 
     def __init__(self):
         user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36"
         self.headers = {"User-Agent": user_agent,
+                        "Accept-Encoding": "gzip",
                         "Referer": "https://www.google.com"}
 
     def getWebContent(self, url):
-        # time.sleep(3*random.random())
+        time_sleep = self.config.time_sleep
+        if time_sleep > 0:
+            time_sleep = time_sleep * random.random()
+            print('time sleep: ' + str(time_sleep))
+            time.sleep(time_sleep)
+
         req = request.Request(url, headers=self.headers)
         res = request.urlopen(req)
         charset = res.headers.get_content_charset()
@@ -35,6 +50,7 @@ class baseSpider():
             html = content.decode(charset)
         else:
             html = gzip.decompress(content).decode(charset)
+
         return html
 
     def getBS4WebContent(self, url):
@@ -45,18 +61,24 @@ class baseSpider():
     def download(self, url):
         pass
 
-    def saveImages(self, url, name):
-        request.urlretrieve(url, name)
+    def save(self, url, name):
+        if url not in self._downloaded_photos:
+            self._downloaded_photos.append(url)
+            request.urlretrieve(url, name)
+            print(url)
 
     def __makeDownloadDir(self):
-        sub_folder = os.path.join(os.getcwd(), self.config.download_path)
+        subclass_name = self.__class__.__name__
+        sub_folder = os.path.join(self.config.download_path, subclass_name)
+        print(sub_folder)
         if not os.path.exists(sub_folder):
             os.mkdir(sub_folder)
+
         os.chdir(sub_folder)
 
     def getPhoto(self):
         self.__makeDownloadDir()
-        start = 0
+        start = 1
         for i in range(start, self.config.last_page):
             url = self.config.page_url + str(i)
             # time.sleep(1)

@@ -1,14 +1,15 @@
 #-*-coding=utf-8-*-
 __author__ = 'jeffrey'
 from xitek import xitek
+from zhihu import zhihu
 import importlib
 import sys
 
-importlib.reload(sys)
-
 
 def main():
-    xitek().getPhoto()
+    for task in [xitek(), zhihu()]:
+        importlib.reload(sys)
+        task.getPhoto()
 
 
 if __name__ == "__main__":

@@ -1,9 +1,9 @@
 #-*-coding=utf-8-*-
 __author__ = 'jeffrey'
+
 from baseSpider import baseSpider, config
 from bs4 import BeautifulSoup
 import re
-#from urllib import request
 
 
 class xitek(baseSpider):
@@ -14,8 +14,7 @@ class xitek(baseSpider):
         self.config = cfg
         cfg.site_url = "http://photo.xitek.com/"
         cfg.page_url = "http://photo.xitek.com/style/0/p/"
-        cfg.download_path = "photos"
-        cfg.last_page = self.__get_last_page()
+        cfg.last_page = 2  # self.__get_last_page()
 
     def __get_last_page(self):
         bs = self.getBS4WebContent(self.config.site_url)
@@ -30,7 +29,6 @@ class xitek(baseSpider):
         for i in content:
             bs = self.getBS4WebContent(self.config.site_url + i)
             final_link = bs.find('img', class_="mimg")['src']
-            print(final_link)
             title = bs.title.string.strip()
             filename = re.sub('[\/:*?"<>|]', '-', title) + '.jpg'
-            self.saveImages(final_link, filename)
+            self.save(final_link, filename)
