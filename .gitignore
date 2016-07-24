@@ -2,4 +2,5 @@
 *.pyc
 
 spider/photos/*
-
+zhihu/*
+.*/*

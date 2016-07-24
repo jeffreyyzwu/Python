@@ -12,7 +12,7 @@ class config():
 
     site_url = ""
     last_page = 1
-    page_urls = ""
+    page_url = ""
     _download_path = ""
     time_sleep = 0
 
@@ -67,7 +67,7 @@ class baseSpider():
             request.urlretrieve(url, name)
             print(url)
 
-    def __makeDownloadDir(self):
+    def makeDownloadDir(self):
         subclass_name = self.__class__.__name__
         sub_folder = os.path.join(
             self.config.download_path, 'photos', subclass_name)
@@ -78,7 +78,7 @@ class baseSpider():
         os.chdir(sub_folder)
 
     def getPhoto(self):
-        self.__makeDownloadDir()
+        self.makeDownloadDir()
         start = 1
         for i in range(start, self.config.last_page):
             url = self.config.page_url + str(i)
