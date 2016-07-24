@@ -1,0 +1,5 @@
+
+*.pyc
+
+spider/photos/*
+

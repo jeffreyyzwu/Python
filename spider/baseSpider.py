@@ -69,7 +69,8 @@ class baseSpider():
 
     def __makeDownloadDir(self):
         subclass_name = self.__class__.__name__
-        sub_folder = os.path.join(self.config.download_path, subclass_name)
+        sub_folder = os.path.join(
+            self.config.download_path, 'photos', subclass_name)
         print(sub_folder)
         if not os.path.exists(sub_folder):
             os.mkdir(sub_folder)
