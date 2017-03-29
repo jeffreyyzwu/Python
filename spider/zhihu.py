@@ -15,7 +15,7 @@ class zhihu(baseSpider):
         cfg = config()
         self.config = cfg
         cfg.site_url = "https://www.zhihu.com"
-        cfg.page_url = "https://www.zhihu.com/topic/19584431/top-answers?page="
+        cfg.page_url = ""
         cfg.last_page = 2
         cfg.time_sleep = 2
 
